@@ -9,5 +9,17 @@
 User.create!({
   email: ENV.fetch('USER_EMAIL'),
   password: ENV.fetch('USER_PASSWORD'),
-  password_confirmation: ENV.fetch('USER_PASSWORD')
+  password_confirmation: ENV.fetch('USER_PASSWORD'),
+  admin: true
 }) { |user| puts user.encrypted_password }
+
+user = User.create!({
+  email: 'example@example.com',
+  password: 'password123'
+}) { |user| puts user.encrypted_password }
+
+Image.create!({
+  image_data: 'https://i.ytimg.com/vi/SNggmeilXDQ/maxresdefault.jpg',
+  description: 'bAbY ELphHAnT',
+  user: user
+}) {|img| p img.user}

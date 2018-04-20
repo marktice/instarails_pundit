@@ -1,10 +1,13 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
+  before_action :auth_actions, only: [:update, :create]
+
   # GET /images
   # GET /images.json
   def index
     @images = Image.all
+    authorize @images
   end
 
   # GET /images/1
@@ -25,7 +28,7 @@ class ImagesController < ApplicationController
   # POST /images.json
   def create
     @image = Image.new(image_params)
-
+    @image.user = current_user
     respond_to do |format|
       if @image.save
         format.html { redirect_to @image, notice: 'Image was successfully created.' }
@@ -67,8 +70,12 @@ class ImagesController < ApplicationController
       @image = Image.find(params[:id])
     end
 
+    def auth_actions
+      authorize @image
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def image_params
-      params.require(:image).permit(:user_id, :image_data, :description)
+      params.require(:image).permit(:image_data, :description)
     end
 end

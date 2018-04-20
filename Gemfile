@@ -6,7 +6,8 @@ git_source(:github) do |repo_name|
 end
 
 # Imported gems
-gem 'devise'
+gem 'devise' #authentication
+gem 'pundit', '~> 1.1' #authorization
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
